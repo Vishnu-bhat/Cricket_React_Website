@@ -4,15 +4,14 @@ import { Modal, Button, Form } from 'react-bootstrap';
 const AddBowlerModal = ({ show, onHide, onAdd }) => {
   const [formData, setFormData] = useState({
     name: '',
-    matches: '',
-    average: '',
-    image: 'https://via.placeholder.com/50'
+    age: '',
+    bowlingType: '',
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onAdd(formData);
-    setFormData({ name: '', matches: '', average: '', image: 'https://via.placeholder.com/50' });
+    setFormData({ name: '', age: '', bowlingType: '' });
     onHide();
   };
 
@@ -33,23 +32,29 @@ const AddBowlerModal = ({ show, onHide, onAdd }) => {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Matches Played</Form.Label>
+            <Form.Label>Age</Form.Label>
             <Form.Control
               type="number"
-              value={formData.matches}
-              onChange={(e) => setFormData({...formData, matches: parseInt(e.target.value)})}
+              min="10"
+              max="60"
+              value={formData.age}
+              onChange={(e) => setFormData({...formData, age: e.target.value})}
               required
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Average</Form.Label>
-            <Form.Control
-              type="number"
-              step="0.1"
-              value={formData.average}
-              onChange={(e) => setFormData({...formData, average: parseFloat(e.target.value)})}
+            <Form.Label>Bowling Type</Form.Label>
+            <Form.Select
+              value={formData.bowlingType}
+              onChange={(e) => setFormData({...formData, bowlingType: e.target.value})}
               required
-            />
+            >
+              <option value="">Select type</option>
+              <option value="Fast">Fast</option>
+              <option value="Spin">Spin</option>
+              <option value="Medium">Medium</option>
+              <option value="Other">Other</option>
+            </Form.Select>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>

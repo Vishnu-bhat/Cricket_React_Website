@@ -4,36 +4,36 @@ import './App.css';
 import Sidebar from './components/Sidebar';
 import MainContent from './components/MainContent';
 
-function App() {
-  const [selectedBowler, setSelectedBowler] = useState(null);
-  const [bowlers, setBowlers] = useState([
+const initialBowlers = [
     {
       id: 1,
       name: 'Jasprit Bumrah',
-      image: 'https://via.placeholder.com/50',
-      matches: 75,
-      average: 24.3,
+      age: 32,
+      bowlingType: 'Fast',
       sessions: []
     },
     {
       id: 2,
-      name: 'Mohammed Shami',
-      image: 'https://via.placeholder.com/50',
-      matches: 68,
-      average: 27.1,
+      name: 'Bowler 2',
+      age: 23,
+      bowlingType: 'Fast',
       sessions: []
     },
     {
       id: 3,
-      name: 'Ishant Sharma',
-      image: 'https://via.placeholder.com/50',
-      matches: 105,
-      average: 32.4,
+      name: 'Bowler 3',
+      age: 20,
+      bowlingType: 'Fast',
       sessions: []
     }
-  ]);
+  ]
+
+function App() {
+  const [selectedBowler, setSelectedBowler] = useState(null);
+  const [bowlers, setBowlers] = useState(initialBowlers);
 
   const addNewBowler = (bowler) => {
+
     setBowlers([...bowlers, { ...bowler, id: Date.now(), sessions: [] }]);
   };
 

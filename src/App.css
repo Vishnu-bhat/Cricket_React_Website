@@ -1,3 +1,7 @@
+/* Ensure full height for layout containers */
+.container-fluid, .row {
+  height: 100%;
+}
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body, .App {
@@ -26,7 +30,7 @@ body, .App {
   padding-top: 2rem !important;
 }
 
-.sidebar h4 {
+.sidebar h2 {
   font-weight: 700;
   letter-spacing: 1px;
 }
@@ -35,7 +39,7 @@ body, .App {
   height: 100vh;
   overflow-y: auto;
   background: rgba(255,255,255,0.85);
-  border-radius: 16px 0 0 16px;
+
   box-shadow: -2px 0 12px rgba(44,62,80,0.05);
   animation: fadeIn 0.5s;
 }
@@ -116,7 +120,7 @@ body, .App {
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .sidebar {
-    height: 100vh;
+    height: auto;
     position: static;
     box-shadow: none;
   }

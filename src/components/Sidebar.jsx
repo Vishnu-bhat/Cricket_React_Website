@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import AddBowlerModal from './AddBowlerModal';
 
 const Sidebar = ({ bowlers, selectedBowler, setSelectedBowler, addNewBowler }) => {
@@ -12,7 +12,7 @@ const Sidebar = ({ bowlers, selectedBowler, setSelectedBowler, addNewBowler }) =
   return (
     <div className="sidebar bg-dark text-white h-100">
       <div className="p-3">
-        <h4 className="mb-4">Bowlers Dashboard</h4>
+        <h2 className="mb-5">Bowlers Dashboard</h2>
         
         {/* Search Bar */}
         <div className="mb-3">
@@ -27,7 +27,7 @@ const Sidebar = ({ bowlers, selectedBowler, setSelectedBowler, addNewBowler }) =
 
         {/* Add New Bowler Button */}
         <button 
-          className="btn btn-success w-100 mb-4"
+          className="btn btn-success w-100 mb-5"
           onClick={() => setShowModal(true)}
         >
           + Add New Bowler
@@ -43,18 +43,11 @@ const Sidebar = ({ bowlers, selectedBowler, setSelectedBowler, addNewBowler }) =
               }`}
               onClick={() => setSelectedBowler(bowler)}
             >
-              <div className="d-flex align-items-center">
-                <img
-                  src={bowler.image}
-                  alt={bowler.name}
-                  className="rounded-circle me-3"
-                  width="40"
-                  height="40"
-                />
+              <div>
                 <div>
-                  <h6 className="mb-1">{bowler.name}</h6>
-                  <small>Matches: {bowler.matches} | Avg: {bowler.average}</small>
+                  <span style={{ fontWeight: 'bold', fontSize: '1.25rem' }}>{bowler.name}</span>
                 </div>
+                <small>Age: {bowler.age} | Type: {bowler.bowlingType}</small>
               </div>
             </div>
           ))}

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Card, Row, Col, ProgressBar } from 'react-bootstrap';
+import AnalysisChart from './AnalysisChart';
+import StatCard from './StatCard'; // Import the StatCard component
 
-const PerformanceOverview = ({ selectedBowler }) => {
+const PerformanceOverview = ({ selectedBowler, performanceChartData }) => {
   const overviewData = {
     hipFlexion: { current: 72, target: 70, status: 'good' },
     kneeAngle: { current: 48, target: 50, status: 'warning' },
@@ -21,6 +23,7 @@ const PerformanceOverview = ({ selectedBowler }) => {
 
   return (
     <div className="performance-overview">
+      {/* Performance Metrics and Insights Cards */}
       <Row className="mb-4">
         <Col md={6}>
           <Card>
@@ -33,37 +36,37 @@ const PerformanceOverview = ({ selectedBowler }) => {
                   <span>Hip Flexion</span>
                   <span>{overviewData.hipFlexion.current}° / {overviewData.hipFlexion.target}°</span>
                 </div>
-                <ProgressBar 
-                  variant={getStatusColor(overviewData.hipFlexion.status)} 
-                  now={(overviewData.hipFlexion.current / 100) * 100} 
+                <ProgressBar
+                  variant={getStatusColor(overviewData.hipFlexion.status)}
+                  now={(overviewData.hipFlexion.current / overviewData.hipFlexion.target) * 100}
                 />
               </div>
-              
+
               <div className="mb-3">
                 <div className="d-flex justify-content-between">
                   <span>Knee Angle</span>
                   <span>{overviewData.kneeAngle.current}° / {overviewData.kneeAngle.target}°</span>
                 </div>
-                <ProgressBar 
-                  variant={getStatusColor(overviewData.kneeAngle.status)} 
-                  now={(overviewData.kneeAngle.current / 100) * 100} 
+                <ProgressBar
+                  variant={getStatusColor(overviewData.kneeAngle.status)}
+                  now={(overviewData.kneeAngle.current / overviewData.kneeAngle.target) * 100}
                 />
               </div>
-              
+
               <div className="mb-3">
                 <div className="d-flex justify-content-between">
                   <span>Consistency Score</span>
                   <span>{overviewData.consistency.score}%</span>
                 </div>
-                <ProgressBar 
-                  variant={getStatusColor(overviewData.consistency.status)} 
-                  now={overviewData.consistency.score} 
+                <ProgressBar
+                  variant={getStatusColor(overviewData.consistency.status)}
+                  now={overviewData.consistency.score}
                 />
               </div>
             </Card.Body>
           </Card>
         </Col>
-        
+
         <Col md={6}>
           <Card>
             <Card.Header>
@@ -90,7 +93,8 @@ const PerformanceOverview = ({ selectedBowler }) => {
         </Col>
       </Row>
 
-      <Row>
+            {/* Session Summary using StatCard */}
+      <Row  className="mb-4">
         <Col>
           <Card>
             <Card.Header>
@@ -99,42 +103,62 @@ const PerformanceOverview = ({ selectedBowler }) => {
             <Card.Body>
               <Row>
                 <Col md={3}>
-                  <Card className="bg-primary text-white text-center">
-                    <Card.Body>
-                      <h4>{selectedBowler.sessions?.length || 0}</h4>
-                      <small>Total Sessions</small>
-                    </Card.Body>
-                  </Card>
+                  <StatCard
+                    value={selectedBowler.sessions?.length || 0}
+                    label="Total Sessions"
+                    bg="primary"
+                    text="white"
+                  />
                 </Col>
                 <Col md={3}>
-                  <Card className="bg-success text-white text-center">
-                    <Card.Body>
-                      <h4>15</h4>
-                      <small>Safe Sessions</small>
-                    </Card.Body>
-                  </Card>
+                  <StatCard
+                    value="15"
+                    label="Safe Sessions"
+                    bg="success"
+                    text="white"
+                  />
                 </Col>
                 <Col md={3}>
-                  <Card className="bg-warning text-white text-center">
-                    <Card.Body>
-                      <h4>3</h4>
-                      <small>Warning Sessions</small>
-                    </Card.Body>
-                  </Card>
+                  <StatCard
+                    value="3"
+                    label="Warning Sessions"
+                    bg="warning"
+                    text="white"
+                  />
                 </Col>
                 <Col md={3}>
-                  <Card className="bg-danger text-white text-center">
-                    <Card.Body>
-                      <h4>1</h4>
-                      <small>Danger Sessions</small>
-                    </Card.Body>
-                  </Card>
+                  <StatCard
+                    value="1"
+                    label="Danger Sessions"
+                    bg="danger"
+                    text="white"
+                  />
                 </Col>
               </Row>
             </Card.Body>
           </Card>
         </Col>
       </Row>
+
+      {/* Combined Analysis Chart */}
+       <Row>
+        <Col>
+          <Card>
+            <Card.Header>
+              <h5>Combined Biomechanical Analysis (Last 5 Sessions)</h5>
+            </Card.Header>
+            <Card.Body>
+                <AnalysisChart
+                    title="All Angles Overview"
+                    data={performanceChartData}
+                    type="line"
+                />
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+
+
     </div>
   );
 };

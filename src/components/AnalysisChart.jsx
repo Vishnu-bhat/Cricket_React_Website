@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-const AnalysisChart = ({ title, data, type, color, backgroundColor }) => {
+const AnalysisChart = ({ title, data, type }) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
@@ -11,37 +11,45 @@ const AnalysisChart = ({ title, data, type, color, backgroundColor }) => {
     }
 
     const ctx = chartRef.current.getContext('2d');
+    
+    // Dynamically create datasets from the data prop
+    const chartDatasets = data.datasets.map(ds => ({
+      label: ds.label,
+      data: ds.data,
+      borderColor: ds.color,
+      backgroundColor: ds.bgColor,
+      borderWidth: 2,
+      fill: type === 'line',
+      tension: 0.4
+    }));
+    
+    // Add safe range lines only if a threshold is provided
+    if (data.threshold) {
+      chartDatasets.push({
+        label: 'Safe Range (Min)',
+        data: Array(data.labels.length).fill(data.threshold.min),
+        borderColor: 'rgba(40, 167, 69, 0.7)',
+        borderDash: [5, 5],
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: false
+      });
+      chartDatasets.push({
+        label: 'Safe Range (Max)',
+        data: Array(data.labels.length).fill(data.threshold.max),
+        borderColor: 'rgba(40, 167, 69, 0.7)',
+        borderDash: [5, 5],
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: false,
+      });
+    }
+
     chartInstance.current = new Chart(ctx, {
       type: type,
       data: {
         labels: data.labels,
-        datasets: [
-          {
-            label: title,
-            data: data.data,
-            borderColor: color,
-            backgroundColor: backgroundColor,
-            borderWidth: 2,
-            fill: type === 'line',
-            tension: 0.4
-          },
-          {
-            label: 'Safe Range (Min)',
-            data: Array(data.labels.length).fill(data.threshold.min),
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderDash: [5, 5],
-            pointRadius: 0,
-            fill: false
-          },
-          {
-            label: 'Safe Range (Max)',
-            data: Array(data.labels.length).fill(data.threshold.max),
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderDash: [5, 5],
-            pointRadius: 0,
-            fill: false
-          }
-        ]
+        datasets: chartDatasets
       },
       options: {
         responsive: true,
@@ -79,9 +87,8 @@ const AnalysisChart = ({ title, data, type, color, backgroundColor }) => {
         chartInstance.current.destroy();
       }
     };
-  }, [data, title, type, color, backgroundColor]);
+  }, [data, title, type]);
 
-  // Use a container with fixed height and relative positioning
   return (
     <div className="chart-container" style={{ position: 'relative', height: '400px', width: '100%' }}>
       <canvas
