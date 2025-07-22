@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Card, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import AnalysisChart from './AnalysisChart';
-import StatCard from './StatCard'; // Import the StatCard component
 
 const AngleAnalysis = ({
   title,
@@ -53,36 +52,36 @@ const AngleAnalysis = ({
               </div>
               <Row className="mb-3">
                 <Col md={3}>
-                  <StatCard
-                    value={`${currentData.threshold.min}° - ${currentData.threshold.max}°`}
-                    label={safeLabel}
-                    bg="success"
-                    text="white"
-                  />
+                  <Card className="bg-success text-white">
+                    <Card.Body className="text-center">
+                      <h4>{currentData.threshold.min}° - {currentData.threshold.max}°</h4>
+                      <small>{safeLabel}</small>
+                    </Card.Body>
+                  </Card>
                 </Col>
                 <Col md={3}>
-                  <StatCard
-                    value={dangerSessions}
-                    label={dangerLabel}
-                    bg="danger"
-                    text="white"
-                  />
+                  <Card className="bg-danger text-white">
+                    <Card.Body className="text-center">
+                      <h4>{dangerSessions}</h4>
+                      <small>{dangerLabel}</small>
+                    </Card.Body>
+                  </Card>
                 </Col>
                 <Col md={3}>
-                  <StatCard
-                    value={`${Math.max(...allDataPoints)}°`}
-                    label={maxLabel}
-                    bg="info"
-                    text="white"
-                  />
+                  <Card className="bg-info text-white">
+                    <Card.Body className="text-center">
+                      <h4>{Math.max(...allDataPoints)}°</h4>
+                      <small>{maxLabel}</small>
+                    </Card.Body>
+                  </Card>
                 </Col>
                 <Col md={3}>
-                  <StatCard
-                    value={`${Math.min(...allDataPoints)}°`}
-                    label={minLabel}
-                    bg="warning"
-                    text="white"
-                  />
+                  <Card className="bg-warning text-white">
+                    <Card.Body className="text-center">
+                      <h4>{Math.min(...allDataPoints)}°</h4>
+                      <small>{minLabel}</small>
+                    </Card.Body>
+                  </Card>
                 </Col>
               </Row>
               <AnalysisChart

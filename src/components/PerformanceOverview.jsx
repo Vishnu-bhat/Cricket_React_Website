@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Row, Col, ProgressBar } from 'react-bootstrap';
-import AnalysisChart from './AnalysisChart';
-import StatCard from './StatCard'; // Import the StatCard component
+import AnalysisChart from './AnalysisChart'; // Import the chart component
 
 const PerformanceOverview = ({ selectedBowler, performanceChartData }) => {
   const overviewData = {
@@ -23,8 +22,8 @@ const PerformanceOverview = ({ selectedBowler, performanceChartData }) => {
 
   return (
     <div className="performance-overview">
-      {/* Performance Metrics and Insights Cards */}
       <Row className="mb-4">
+        {/* Existing Performance Metrics and Insights Cards */}
         <Col md={6}>
           <Card>
             <Card.Header>
@@ -93,7 +92,7 @@ const PerformanceOverview = ({ selectedBowler, performanceChartData }) => {
         </Col>
       </Row>
 
-            {/* Session Summary using StatCard */}
+      {/* Existing Session Summary */}
       <Row  className="mb-4">
         <Col>
           <Card>
@@ -103,36 +102,36 @@ const PerformanceOverview = ({ selectedBowler, performanceChartData }) => {
             <Card.Body>
               <Row>
                 <Col md={3}>
-                  <StatCard
-                    value={selectedBowler.sessions?.length || 0}
-                    label="Total Sessions"
-                    bg="primary"
-                    text="white"
-                  />
+                  <Card className="bg-primary text-white text-center">
+                    <Card.Body>
+                      <h4>{selectedBowler.sessions?.length || 0}</h4>
+                      <small>Total Sessions</small>
+                    </Card.Body>
+                  </Card>
                 </Col>
                 <Col md={3}>
-                  <StatCard
-                    value="15"
-                    label="Safe Sessions"
-                    bg="success"
-                    text="white"
-                  />
+                  <Card className="bg-success text-white text-center">
+                    <Card.Body>
+                      <h4>15</h4>
+                      <small>Safe Sessions</small>
+                    </Card.Body>
+                  </Card>
                 </Col>
                 <Col md={3}>
-                  <StatCard
-                    value="3"
-                    label="Warning Sessions"
-                    bg="warning"
-                    text="white"
-                  />
+                  <Card className="bg-warning text-white text-center">
+                    <Card.Body>
+                      <h4>3</h4>
+                      <small>Warning Sessions</small>
+                    </Card.Body>
+                  </Card>
                 </Col>
                 <Col md={3}>
-                  <StatCard
-                    value="1"
-                    label="Danger Sessions"
-                    bg="danger"
-                    text="white"
-                  />
+                  <Card className="bg-danger text-white text-center">
+                    <Card.Body>
+                      <h4>1</h4>
+                      <small>Danger Sessions</small>
+                    </Card.Body>
+                  </Card>
                 </Col>
               </Row>
             </Card.Body>
@@ -140,7 +139,7 @@ const PerformanceOverview = ({ selectedBowler, performanceChartData }) => {
         </Col>
       </Row>
 
-      {/* Combined Analysis Chart */}
+      {/* New Combined Analysis Chart */}
        <Row>
         <Col>
           <Card>
