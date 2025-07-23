@@ -12,8 +12,9 @@ const Sidebar = ({ bowlers, selectedBowler, setSelectedBowler, addNewBowler }) =
   return (
     <div className="sidebar h-100">
       <div className="p-3">
-        <h2 className="mb-4">Bowler HQ</h2>
+        <h2 className="mb-4 text-center">BOWLER DASHBOARD</h2>
         
+        {/* Search Bar */}
         <div className="mb-3">
           <input
             type="text"
@@ -24,6 +25,7 @@ const Sidebar = ({ bowlers, selectedBowler, setSelectedBowler, addNewBowler }) =
           />
         </div>
 
+        {/* Add New Bowler Button */}
         <button 
           className="btn btn-add-bowler w-100 mb-4"
           onClick={() => setShowModal(true)}
@@ -31,12 +33,13 @@ const Sidebar = ({ bowlers, selectedBowler, setSelectedBowler, addNewBowler }) =
           + Add New Bowler
         </button>
 
+        {/* Bowlers List */}
         <div className="bowlers-list">
-          <h6 className="text-muted text-uppercase small px-2 mb-2">Your Bowlers</h6>
+          <h6 className="text-muted text-uppercase small mb-2">Your Bowlers</h6>
           {filteredBowlers.map(bowler => (
             <div
               key={bowler.id}
-              className={`sidebar-bowler-item p-3 mb-2 ${
+              className={`sidebar-bowler-item p-3 mb-2 rounded ${
                 selectedBowler?.id === bowler.id ? 'active' : ''
               }`}
               onClick={() => setSelectedBowler(bowler)}

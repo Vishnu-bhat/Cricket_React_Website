@@ -16,16 +16,9 @@ const initialBowlers = [
       id: 2,
       name: 'Bowler 2',
       age: 23,
-      bowlingType: 'Fast',
+      bowlingType: 'Medium',
       sessions: []
     },
-    {
-      id: 3,
-      name: 'Bowler 3',
-      age: 20,
-      bowlingType: 'Fast',
-      sessions: []
-    }
   ]
 
 function App() {
@@ -33,7 +26,6 @@ function App() {
   const [bowlers, setBowlers] = useState(initialBowlers);
 
   const addNewBowler = (bowler) => {
-
     setBowlers([...bowlers, { ...bowler, id: Date.now(), sessions: [] }]);
   };
 
