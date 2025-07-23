@@ -5,39 +5,61 @@ const AnalysisChart = ({ title, data, type }) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
+  // Define colors based on the new UI palette from App.css
+  const colors = {
+    danger: '#FF453A', // Red color for safe range
+    textPrimary: '#000000',
+    textSecondary: '#8A8A8E',
+    gridColor: '#E5E5EA'
+  };
+
   useEffect(() => {
+    // Set default font styles for Chart.js to match the app's theme
+    Chart.defaults.font.family = 'Inter, sans-serif';
+    Chart.defaults.font.size = 12;
+    Chart.defaults.color = colors.textSecondary;
+
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
 
     const ctx = chartRef.current.getContext('2d');
     
-    // Dynamically create datasets from the data prop
+    // The 'color' prop from MainContent.jsx is now used directly here
     const chartDatasets = data.datasets.map(ds => ({
       label: ds.label,
       data: ds.data,
-      borderColor: ds.color,
-      backgroundColor: ds.bgColor,
-      borderWidth: 2,
-      fill: type === 'line',
-      tension: 0.4
+      borderColor: ds.color, // Use the color passed from MainContent
+      borderWidth: 3,
+      fill: false,
+      tension: 0.4,
+      pointRadius: 4,
+      pointBackgroundColor: ds.color,
+      pointBorderColor: '#fff',
+      pointBorderWidth: 2,
+      pointHoverRadius: 7,
+      pointHoverBackgroundColor: ds.color,
     }));
     
-    // Add safe range lines only if a threshold is provided
+    // Add styled safe range lines, now in RED
     if (data.threshold) {
       chartDatasets.push({
-        label: 'Safe Range (Min)',
+        label: 'Safe Range',
         data: Array(data.labels.length).fill(data.threshold.min),
-        borderColor: 'rgba(40, 167, 69, 0.7)',
+        borderColor: colors.danger, // Using danger color for safe range
         borderDash: [5, 5],
         borderWidth: 2,
         pointRadius: 0,
-        fill: false
+        fill: false,
+        // Hides the second 'Safe Range' label in the legend
+        legend: {
+          display: false
+        }
       });
       chartDatasets.push({
-        label: 'Safe Range (Max)',
+        label: 'Safe Range (Max)', // This label will be hidden
         data: Array(data.labels.length).fill(data.threshold.max),
-        borderColor: 'rgba(40, 167, 69, 0.7)',
+        borderColor: colors.danger, // Using danger color for safe range
         borderDash: [5, 5],
         borderWidth: 2,
         pointRadius: 0,
@@ -56,29 +78,71 @@ const AnalysisChart = ({ title, data, type }) => {
         maintainAspectRatio: false,
         scales: {
           y: {
-            beginAtZero: true,
+            beginAtZero: false,
             title: {
               display: true,
-              text: 'Angle (degrees)'
+              text: 'Angle (degrees)',
+              font: { weight: '600' }
+            },
+            grid: {
+              color: colors.gridColor,
+              drawBorder: false,
             }
           },
           x: {
             title: {
               display: true,
-              text: 'Time Period'
+              text: 'Time Period',
+              font: { weight: '600' }
+            },
+            grid: {
+              display: false,
             }
           }
         },
         plugins: {
           legend: {
-            display: true,
-            position: 'top'
+            position: 'bottom',
+            // Filter out one of the 'Safe Range' labels to avoid duplicates
+            labels: {
+              usePointStyle: true,
+              pointStyle: 'circle',
+              padding: 20,
+              font: {
+                size: 14
+              },
+              filter: function(legendItem, chartData) {
+                return legendItem.text !== 'Safe Range (Max)';
+              }
+            }
           },
           title: {
             display: true,
-            text: title
+            text: title,
+            font: {
+              size: 18,
+              weight: '700',
+            },
+            color: colors.textPrimary,
+            padding: {
+              bottom: 20
+            }
+          },
+          tooltip: {
+            enabled: true,
+            backgroundColor: '#000',
+            titleFont: { size: 14, weight: 'bold' },
+            bodyFont: { size: 12 },
+            padding: 10,
+            cornerRadius: 8,
+            displayColors: true,
+            boxPadding: 4
           }
-        }
+        },
+        interaction: {
+            intersect: false,
+            mode: 'index',
+        },
       }
     });
 
@@ -91,12 +155,7 @@ const AnalysisChart = ({ title, data, type }) => {
 
   return (
     <div className="chart-container" style={{ position: 'relative', height: '400px', width: '100%' }}>
-      <canvas
-        ref={chartRef}
-        width={800}
-        height={400}
-        style={{ width: '100%', height: '100%' }}
-      />
+      <canvas ref={chartRef} />
     </div>
   );
 };

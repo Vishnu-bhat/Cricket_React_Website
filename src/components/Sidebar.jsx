@@ -10,44 +10,40 @@ const Sidebar = ({ bowlers, selectedBowler, setSelectedBowler, addNewBowler }) =
   );
 
   return (
-    <div className="sidebar bg-dark text-white h-100">
+    <div className="sidebar h-100">
       <div className="p-3">
-        <h2 className="mb-5">Bowlers Dashboard</h2>
+        <h2 className="mb-4">Bowler HQ</h2>
         
-        {/* Search Bar */}
         <div className="mb-3">
           <input
             type="text"
-            className="form-control"
+            className="form-control sidebar-search"
             placeholder="Search bowlers..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        {/* Add New Bowler Button */}
         <button 
-          className="btn btn-success w-100 mb-5"
+          className="btn btn-add-bowler w-100 mb-4"
           onClick={() => setShowModal(true)}
         >
           + Add New Bowler
         </button>
 
-        {/* Bowlers List */}
         <div className="bowlers-list">
+          <h6 className="text-muted text-uppercase small px-2 mb-2">Your Bowlers</h6>
           {filteredBowlers.map(bowler => (
             <div
               key={bowler.id}
-              className={`bowler-card p-3 mb-2 rounded cursor-pointer ${
-                selectedBowler?.id === bowler.id ? 'bg-primary' : 'bg-secondary'
+              className={`sidebar-bowler-item p-3 mb-2 ${
+                selectedBowler?.id === bowler.id ? 'active' : ''
               }`}
               onClick={() => setSelectedBowler(bowler)}
             >
               <div>
-                <div>
-                  <span style={{ fontWeight: 'bold', fontSize: '1.25rem' }}>{bowler.name}</span>
-                </div>
-                <small>Age: {bowler.age} | Type: {bowler.bowlingType}</small>
+                <div className="fw-bold">{bowler.name}</div>
+                <small className="text-muted">Age: {bowler.age} | Type: {bowler.bowlingType}</small>
               </div>
             </div>
           ))}

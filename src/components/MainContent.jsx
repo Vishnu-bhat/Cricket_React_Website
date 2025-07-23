@@ -26,6 +26,14 @@ const MainContent = ({ selectedBowler, bowlers, setBowlers }) => {
     ));
   };
 
+  // Updated color palette for angles
+  const angleColors = {
+    leftHip: '#5E5CE6', // Primary Purple
+    rightHip: '#BF5AF2', // Vibrant Pink/Magenta
+    leftKnee: '#32D74B', // Success Green
+    rightKnee: '#00C7BE', // Teal
+  };
+
   const hipDataSets = {
     session: {
       labels: ['Session 1', 'Session 2', 'Session 3', 'Session 4', 'Session 5'],
@@ -34,14 +42,12 @@ const MainContent = ({ selectedBowler, bowlers, setBowlers }) => {
         {
           label: 'Left Hip',
           data: [65, 72, 68, 75, 70],
-          color: 'rgba(54, 162, 235, 1)',
-          bgColor: 'rgba(54, 162, 235, 0.2)',
+          color: angleColors.leftHip,
         },
         {
           label: 'Right Hip',
           data: [62, 69, 71, 73, 68],
-          color: 'rgba(255, 99, 132, 1)',
-          bgColor: 'rgba(255, 99, 132, 0.2)',
+          color: angleColors.rightHip,
         }
       ]
     },
@@ -52,14 +58,12 @@ const MainContent = ({ selectedBowler, bowlers, setBowlers }) => {
         {
           label: 'Left Hip',
           data: [68, 71, 69, 73, 72, 70],
-          color: 'rgba(54, 162, 235, 1)',
-          bgColor: 'rgba(54, 162, 235, 0.2)',
+          color: angleColors.leftHip,
         },
         {
           label: 'Right Hip',
           data: [66, 70, 68, 71, 70, 69],
-          color: 'rgba(255, 99, 132, 1)',
-          bgColor: 'rgba(255, 99, 132, 0.2)',
+          color: angleColors.rightHip,
         }
       ]
     },
@@ -70,14 +74,12 @@ const MainContent = ({ selectedBowler, bowlers, setBowlers }) => {
         {
           label: 'Left Hip',
           data: [67, 70, 72, 71],
-          color: 'rgba(54, 162, 235, 1)',
-          bgColor: 'rgba(54, 162, 235, 0.2)',
+          color: angleColors.leftHip,
         },
         {
           label: 'Right Hip',
           data: [65, 68, 70, 69],
-          color: 'rgba(255, 99, 132, 1)',
-          bgColor: 'rgba(255, 99, 132, 0.2)',
+          color: angleColors.rightHip,
         }
       ]
     }
@@ -91,14 +93,12 @@ const MainContent = ({ selectedBowler, bowlers, setBowlers }) => {
         {
           label: 'Left Knee',
           data: [45, 52, 48, 56, 50],
-          color: 'rgba(75, 192, 192, 1)',
-          bgColor: 'rgba(75, 192, 192, 0.2)',
+          color: angleColors.leftKnee,
         },
         {
           label: 'Right Knee',
           data: [43, 50, 49, 53, 48],
-          color: 'rgba(255, 159, 64, 1)',
-          bgColor: 'rgba(255, 159, 64, 0.2)',
+          color: angleColors.rightKnee,
         }
       ]
     },
@@ -109,14 +109,12 @@ const MainContent = ({ selectedBowler, bowlers, setBowlers }) => {
         {
           label: 'Left Knee',
           data: [48, 51, 49, 53, 52, 50],
-          color: 'rgba(75, 192, 192, 1)',
-          bgColor: 'rgba(75, 192, 192, 0.2)',
+          color: angleColors.leftKnee,
         },
         {
           label: 'Right Knee',
           data: [46, 49, 48, 51, 50, 49],
-          color: 'rgba(255, 159, 64, 1)',
-          bgColor: 'rgba(255, 159, 64, 0.2)',
+          color: angleColors.rightKnee,
         }
       ]
     },
@@ -127,14 +125,12 @@ const MainContent = ({ selectedBowler, bowlers, setBowlers }) => {
         {
           label: 'Left Knee',
           data: [47, 50, 52, 51],
-          color: 'rgba(75, 192, 192, 1)',
-          bgColor: 'rgba(75, 192, 192, 0.2)',
+          color: angleColors.leftKnee,
         },
         {
           label: 'Right Knee',
           data: [46, 48, 50, 49],
-          color: 'rgba(255, 159, 64, 1)',
-          bgColor: 'rgba(255, 159, 64, 0.2)',
+          color: angleColors.rightKnee,
         }
       ]
     }
@@ -148,20 +144,17 @@ const MainContent = ({ selectedBowler, bowlers, setBowlers }) => {
       ]
   };
 
-
   return (
     <div className="main-content">
-      {/* Header */}
-      <div className="bg-light p-4 border-bottom">
+      <div className="mb-4">
         <h2>{selectedBowler.name} - Analysis Dashboard</h2>
-        <p className="text-muted mb-2">Age: {selectedBowler.age}   |   Type: {selectedBowler.bowlingType}</p>
+        <p className="text-secondary">Age: {selectedBowler.age}   |   Type: {selectedBowler.bowlingType}</p>
       </div>
 
-      {/* Tabs Navigation */}
-      <Nav variant="tabs" className="px-3 pt-3">
+      <Nav variant="tabs" className="mb-4">
         <Nav.Item>
           <Nav.Link
-            active={activeTab === 'database'}
+            className={activeTab === 'database' ? 'active' : ''}
             onClick={() => setActiveTab('database')}
           >
             Add Database
@@ -169,7 +162,15 @@ const MainContent = ({ selectedBowler, bowlers, setBowlers }) => {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link
-            active={activeTab === 'hip'}
+            className={activeTab === 'performance' ? 'active' : ''}
+            onClick={() => setActiveTab('performance')}
+          >
+            Performance Overview
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            className={activeTab === 'hip' ? 'active' : ''}
             onClick={() => setActiveTab('hip')}
           >
             Hip Flexion Analysis
@@ -177,24 +178,15 @@ const MainContent = ({ selectedBowler, bowlers, setBowlers }) => {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link
-            active={activeTab === 'knee'}
+            className={activeTab === 'knee' ? 'active' : ''}
             onClick={() => setActiveTab('knee')}
           >
             Knee Analysis
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
-          <Nav.Link
-            active={activeTab === 'performance'}
-            onClick={() => setActiveTab('performance')}
-          >
-            Performance Overview
-          </Nav.Link>
-        </Nav.Item>
       </Nav>
 
-      {/* Tab Content */}
-      <div className="tab-content p-3">
+      <div className="tab-content">
         {activeTab === 'database' && (
           <AddDatabase
             selectedBowler={selectedBowler}
