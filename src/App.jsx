@@ -17,7 +17,13 @@ const initialBowlers = [
       name: 'Bowler 2',
       age: 23,
       bowlingType: 'Medium',
-      sessions: []
+      sessions: [] 
+
+
+
+
+
+      
     },
   ]
 

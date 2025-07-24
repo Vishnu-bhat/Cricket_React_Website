@@ -27,7 +27,7 @@ const PerformanceOverview = ({ selectedBowler, performanceChartData }) => {
             <div className="stat-card">
               <div className="stat-card-icon icon-total">#</div>
               <div className="stat-card-info">
-                <h4>{selectedBowler.sessions?.length || 0}</h4>
+                <h4>{selectedBowler.sessions?.length || 5}</h4>
                 <small>Total Sessions</small>
               </div>
             </div>
