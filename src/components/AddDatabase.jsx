@@ -171,7 +171,7 @@ const AddDatabase = ({ selectedBowler, updateBowlerSessions }) => {
               muted 
               playsInline
 
-              src="src\assets\Pose Estimation 1.mp4" 
+              src="src\assets\Pose1.mp4" 
             >
               Your browser does not support the video tag.
             </video>
